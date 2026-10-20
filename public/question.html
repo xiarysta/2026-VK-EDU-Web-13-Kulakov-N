@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вопрос 1</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/css/style.css">
+  </head>
+
+  <body>
+
+    <header>
+      <a class="header-logo" href="index.html">
+        <h1>Why&What</h1>
+      </a>
+
+      <div class="header-search">
+        <input type="search" placeholder="Поиск вопросов">
+        <a class="header-ask-btn" href="ask.html"> Спросить! </a>
+      </div>
+        
+      <div class="header-user-info">
+        <img class="header-user-avatar" src="static/img/image.png" alt="Аватарка">
+        <div class="header-user-actions">
+          <span>Dr.Pepper</span>
+          <div>
+            <a href="">Настройки</a>
+            <a href="">Выйти</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-layout">
+      <main class="page-content">
+
+        <article class="question-card question-detail">
+          <div class="question-vote">
+            <img class="question-avatar" src="static/img/image.png"
+            alt="Аватар автора вопроса">
+
+            <div class="question-vote-controls">
+              <button type="button" aria-label="Поставить плюс">▲</button>
+              <span> 5 </span>
+              <button type="button" aria-label="Поставить минус">▼</button>
+            </div>
+          </div>
+
+          <div class="question-content">
+            <h2>Вопрос 1</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu velit auctor, pulvinar nisi nec, vulputate lectus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vitae bibendum massa. Quisque suscipit, risus vel volutpat gravida, risus nibh molestie ex, nec egestas nisl nibh a tortor. Suspendisse potenti. Vestibulum vulputate nisl vel nulla ultrices commodo. Nulla facilisi. Aenean posuere rutrum ante. Mauris iaculis dui quis nulla finibus, non efficitur neque ultrices.
+            </p>
+
+            <div class="question-meta">
+              <span>
+                Теги:
+                <a href="tag.html">black-jack</a>
+                <a href="tag.html">bender</a>
+              </span>
+              <time datetime="2026-10-19">19 октября</time>
+            </div>
+          </div>
+        </article>
+
+        <article class="question-card answer-card" id="answers">
+          <div class="question-vote">
+            <img class="question-avatar"
+            src="static/img/image.png"
+            alt="Аватар автора ответа">
+
+            <div class="question-vote-controls">
+              <button type="button" aria-label="Поставить плюс">▲</button>
+              <span>3</span>
+              <button type="button" aria-label="Поставить минус">▼</button>
+            </div>
+          </div>
+
+          <div class="question-content">
+            <p>
+              Donec tincidunt neque sit amet ante dapibus dignissim. Cras accumsan ultricies felis. Fusce sed ante tincidunt, sagittis dolor vel, sollicitudin eros. Donec vel tortor justo. Etiam erat neque, molestie sed libero ut, placerat dictum dolor. Nulla elementum tortor id arcu facilisis molestie. Duis id neque id turpis dignissim luctus. Cras sem orci, ornare non neque sed, iaculis dictum quam. Morbi urna risus, porttitor a dui sed, luctus lobortis nibh. Fusce tempus neque vitae tortor gravida, sit amet semper nulla ultricies. Aenean et elit odio.
+            </p>
+
+            <time datetime="2026-10-20"> 20 октября</time>
+
+            <label class="answer-correct">
+              <input type="checkbox" checked>
+              Правильный ответ
+            </label>
+          </div>
+        </article>
+
+        <article class="question-card answer-card">
+          <div class="question-vote">
+            <img class="question-avatar"
+            src="static/img/image.png"
+            alt="Аватар автора ответа">
+
+            <div class="question-vote-controls">
+              <button type="button" aria-label="Поставить плюс">▲</button>
+              <span>3</span>
+              <button type="button" aria-label="Поставить минус">▼</button>
+            </div>
+          </div>
+
+          <div class="question-content">
+            <p>
+              Donec a neque ipsum. Maecenas et laoreet sapien. Aenean sodales aliquam lobortis. Nullam aliquet metus dapibus libero consectetur, eget feugiat massa sagittis. Nam ullamcorper suscipit volutpat. Nulla pellentesque tempus viverra. Duis aliquet ex eu metus dignissim, eget efficitur nibh convallis. Fusce posuere at turpis vel posuere. Fusce sagittis sollicitudin elit, vulputate dapibus ipsum congue a. Integer tempus vehicula justo non bibendum. Morbi ex mauris, tincidunt non ipsum eget, faucibus sodales metus. Phasellus sit amet cursus eros. Nulla vulputate molestie dolor non finibus. Ut at quam ut libero scelerisque semper. Nam sollicitudin quis nisl vitae pulvinar. Praesent lacinia venenatis magna nec facilisis.
+            </p>
+
+            <time datetime="2026-10-20"> 20 октября</time>
+
+            <label class="answer-correct">
+              <input type="checkbox">
+              Правильный ответ
+            </label>
+          </div>
+        </article>
+
+        <nav class="questions-pagination" aria-label="Страницы ответов">
+          <ul class="questions-pagination-list">
+            <li>
+              <a href="question.html#answers" aria-current="page">1</a>
+            </li>
+            <li>
+              <a href="question.html?page=2#answers">2</a>
+            </li>
+            <li>
+              <a href="question.html?page=3#answers">3</a>
+            </li>
+          </ul>
+        </nav>
+
+        <form class="answer-form" action="question.html" method="get">
+          <label class="visually-hidden" for="answer-text">Ваш ответ</label>
+
+          <textarea id="answer-text" name="answer" rows="4" placeholder="Введите ваш ответ…" required maxlength="5000"
+          ></textarea>
+
+          <button type="submit">Ответить</button>
+        </form>
+      </main>
+
+      <aside class="sidebar">
+        <h2> Популярные теги</h2>
+        <div class="sidebar-popular-tags"> 
+          <a href="">Python</a>
+          <a href="">HTML</a>
+          <a href="">CSS</a>
+          <a href="">Django</a>
+          <a href="">MySQL</a>
+          <a href="">TechnoPark</a>
+        </div>
+
+        <h2> Лучшие участники </h2>
+        <div class="sidebar-best-members">
+          <a href="">Петя</a>
+          <a href="">Вова</a>
+          <a href="">Катя</a>
+          <a href="">Миша</a>
+          <a href="">Ваня</a>
+          <a href="">Вася</a>
+        </div>
+      </aside>
+
+    </div>
+
+    <footer class="site-footer">
+      <p> Бла бля бла, вот так вот</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  </body>
+
+
+</html>
