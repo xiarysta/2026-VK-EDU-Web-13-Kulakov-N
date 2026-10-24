@@ -11,8 +11,10 @@
 - [index.html](public/index.html) — список вопросов.
 - [question.html](public/question.html) — вопрос, ответы и форма ответа.
 - [ask.html](public/ask.html) — форма добавления вопроса.
+- [profile.html](public/profile.html) — настройки профиля и выбор аватара.
 
-Страницы `login.html` и `signup.html` пока не сделаны, ссылки на них добавлены в шапку `ask.html` и `question.html`.
+- [login.html](public/login.html) — форма входа.
+- [signup.html](public/signup.html) — форма регистрации с выбором аватара.
 
 ## Как было сделано
 

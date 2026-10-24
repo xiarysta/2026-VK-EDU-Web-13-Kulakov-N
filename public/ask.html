@@ -35,13 +35,17 @@
       <main class="page-content">
         <h2>Новый вопрос</h2>
         <form class="ask-form" action="ask.html" method="get">
+          <p class="auth-form-error" role="alert">Не удалось добавить вопрос. Проверьте данные формы.</p>
+
           <div class="ask-form-row">
             <label for="question-title">Заголовок</label>
             <div class="ask-form-field">
               <input id="question-title" name="title" type="text" placeholder="Как построить парк на луне?"
-              required maxlength="150" aria-describedby="title-hint">
+              required maxlength="150" aria-invalid="true" aria-describedby="title-hint title-error">
 
               <small id="title-hint">Не более 150 символов.</small>
+
+              <p class="auth-field-error" id="title-error">Введите заголовок вопроса.</p>
             </div>
           </div>
 
