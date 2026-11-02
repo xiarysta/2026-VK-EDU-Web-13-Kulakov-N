@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация — WhyAndWhat</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+  </head>
+
+  <body>
+
+    <header>
+      <a class="header-logo" href="index.html">
+        <h1>Why&What</h1>
+      </a>
+
+      <div class="header-search">
+        <input type="search" placeholder="Поиск вопросов">
+        <a class="header-ask-btn" href="ask.html"> Спросить! </a>
+      </div>
+        
+      <div class="header-user-info">
+        <div class="header-user-actions">
+          <a href="login.html">Войти</a>
+          <a href="signup.html">Регистрация</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-layout">
+      <main class="page-content">
+        <h2>Регистрация</h2>
+
+        <form class="register-form" action="signup.html" method="post" enctype="multipart/form-data">
+          <p class="auth-form-error" role="alert">Не удалось создать аккаунт. Проверьте данные формы.</p>
+
+          <div class="register-form-row">
+            <label for="register-username">Логин</label>
+
+            <div class="register-form-field">
+              <input id="register-username" name="username" type="text" placeholder="Придумайте логин"
+              autocomplete="username" required maxlength="30" aria-describedby="username-hint">
+              <small id="username-hint">Не более 30 символов.</small>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-email">Почта</label>
+
+            <div class="register-form-field">
+              <input id="register-email" name="email" type="email" value="drpepper@mail.ru"
+              autocomplete="email" required maxlength="254" aria-invalid="true" aria-describedby="register-email-error">
+              <p class="auth-field-error" id="register-email-error">Этот email уже используется. Укажите другой адрес.</p>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-nickname">Имя</label>
+
+            <div class="register-form-field">
+              <input id="register-nickname" name="nickname" type="text" placeholder="Как вас называть?"
+              autocomplete="nickname" required maxlength="30" aria-describedby="nickname-hint">
+              <small id="nickname-hint">Имя, которое увидят другие участники.</small>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-password">Пароль</label>
+
+            <div class="register-form-field">
+              <input id="register-password" name="password" type="password" placeholder="Придумайте пароль"
+              autocomplete="new-password" required minlength="8" aria-describedby="password-hint">
+              <small id="password-hint">Не менее 8 символов.</small>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-password-repeat">Повтор пароля</label>
+
+            <div class="register-form-field">
+              <input id="register-password-repeat" name="password_repeat" type="password" placeholder="Повторите пароль"
+              autocomplete="new-password" required minlength="8">
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-avatar">Аватар</label>
+
+            <div class="register-form-field">
+              <input id="register-avatar" name="avatar" type="file" accept="image/png, image/jpeg"
+              aria-describedby="register-avatar-hint">
+              <small id="register-avatar-hint">Необязательно. Выберите изображение PNG или JPEG.</small>
+            </div>
+          </div>
+
+          <button type="submit">Зарегистрироваться</button>
+
+          <a class="auth-form-link" href="login.html">Уже есть аккаунт? Войти</a>
+
+        </form>
+      </main>
+
+      <aside class="sidebar">
+        <h2> Популярные теги</h2>
+        <div class="sidebar-popular-tags"> 
+          <a href="">Python</a>
+          <a href="">HTML</a>
+          <a href="">CSS</a>
+          <a href="">Django</a>
+          <a href="">MySQL</a>
+          <a href="">TechnoPark</a>
+        </div>
+
+        <h2> Лучшие участники </h2>
+        <div class="sidebar-best-members">
+          <a href="">Mr. Freeman</a>
+          <a href="">Dr. House</a>
+          <a href="">Bender</a>
+          <a href="">Queen Victoria</a>
+          <a href="">V. Pupkin</a>
+        </div>
+      </aside>
+
+
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-author">
+        <span class="footer-name"> Кулаков Никита Сергеевич</span>
+        <span> Группа: Web-13. Учебный проект Why&What</span>
+      </div>
+
+      <a href="https://education.vk.company/profile/nik.kulakov/" target="_blank" rel="noopener noreferrer">VK education</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  </body>
+
+
+</html>

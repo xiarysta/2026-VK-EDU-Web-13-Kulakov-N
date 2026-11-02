@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — WhyAndWhat</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+  </head>
+
+  <body>
+
+    <header>
+      <a class="header-logo" href="index.html">
+        <h1>Why&What</h1>
+      </a>
+
+      <div class="header-search">
+        <input type="search" placeholder="Поиск вопросов">
+        <a class="header-ask-btn" href="ask.html"> Спросить! </a>
+      </div>
+        
+      <div class="header-user-info">
+        <div class="header-user-actions">
+          <a href="login.html">Войти</a>
+          <a href="signup.html">Регистрация</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-layout">
+      <main class="page-content">
+        <h2>Вход</h2>
+
+        <form class="login-form" action="login.html" method="post">
+          <p class="auth-form-error" role="alert">Неверный логин или пароль. Попробуйте ещё раз.</p>
+
+          <div class="login-form-row">
+            <label for="login-username">Логин</label>
+
+            <div class="login-form-field">
+              <input id="login-username" name="username" type="text" placeholder="Введите логин"
+              autocomplete="username" required maxlength="30">
+            </div>
+          </div>
+
+          <div class="login-form-row">
+            <label for="login-password">Пароль</label>
+
+            <div class="login-form-field">
+              <input id="login-password" name="password" type="password" placeholder="Введите пароль"
+              autocomplete="current-password" required>
+            </div>
+          </div>
+
+          <button type="submit">Войти</button>
+
+          <a class="auth-form-link" href="signup.html">Создать новый аккаунт</a>
+
+        </form>
+      </main>
+
+      <aside class="sidebar">
+        <h2> Популярные теги</h2>
+        <div class="sidebar-popular-tags"> 
+          <a href="">Python</a>
+          <a href="">HTML</a>
+          <a href="">CSS</a>
+          <a href="">Django</a>
+          <a href="">MySQL</a>
+          <a href="">TechnoPark</a>
+        </div>
+
+        <h2> Лучшие участники </h2>
+        <div class="sidebar-best-members">
+          <a href="">Mr. Freeman</a>
+          <a href="">Dr. House</a>
+          <a href="">Bender</a>
+          <a href="">Queen Victoria</a>
+          <a href="">V. Pupkin</a>
+        </div>
+      </aside>
+
+
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-author">
+        <span class="footer-name"> Кулаков Никита Сергеевич</span>
+        <span> Группа: Web-13. Учебный проект Why&What</span>
+      </div>
+
+      <a href="https://education.vk.company/profile/nik.kulakov/" target="_blank" rel="noopener noreferrer">VK education</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  </body>
+
+
+</html>
