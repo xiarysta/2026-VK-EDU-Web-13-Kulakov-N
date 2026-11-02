@@ -5,6 +5,12 @@
 
 [VK education](https://education.vk.company/profile/nik.kulakov/)
 
+## Как запустить
+
+Нужен Python 3. Из корня проекта выполнить:
+
+`python3 -m http.server 8000 --directory public`
+
 ## Что сделано
 
 - [base.html](public/base.html) — общий каркас страницы.
