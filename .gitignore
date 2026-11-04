@@ -1,13 +1,45 @@
+# Editors and operating systems
 .idea/
 .vscode/
-__pycache__/
-*.py[cod]
 .DS_Store
 Thumbs.db
-*.log
-*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+*.egg-info/
+build/
+
+# Virtual environments
 .venv/
 venv/
+env/
+ENV/
+
+# Local environment variables (keep example files)
 .env
+.env.*
+!.env.example
+!.env.sample
+
+# Django local data and generated files
+*.log
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+local_settings.py
+media/
+staticfiles/
+
+# Frontend dependencies and build output
 node_modules/
-dist/   
+dist/
