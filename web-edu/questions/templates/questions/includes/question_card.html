@@ -1,0 +1,34 @@
+{% load static %}
+
+<article class="question-card" id="question-{{ question.id }}">
+  <div class="question-vote">
+    <img class="question-avatar" src="{% static 'questions/img/pumpkin.svg' %}"
+    alt="Аватар автора вопроса">
+
+    <div class="question-vote-controls">
+      <button type="button" aria-label="Поставить плюс">▲</button>
+      <span> {{question.rating}} </span>
+      <button type="button" aria-label="Поставить минус">▼</button>
+    </div>
+  </div>
+
+  <div class="question-content">
+    <h3>
+      <a href="question.html">{{question.title}}</a>
+    </h3>
+    <p>
+      {{question.text}}
+    </p>
+
+    <div class="question-meta">
+      <a href="question.html">Ответы (3)</a>
+      <span>
+        Теги:
+        {% for tag in question.tags %}
+          <a href="tag.html">{{tag}}</a>
+        {% endfor %}
+      </span>
+      <time datetime="2026-10-19">19 октября</time>
+    </div>
+  </div>
+</article>

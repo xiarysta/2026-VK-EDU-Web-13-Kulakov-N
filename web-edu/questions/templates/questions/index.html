@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Новые вопросы - WhyAndWhat
+{% endblock title %}
+
+
+{% block content %}
+
+  <h2 class="questions-heading">
+    Новые вопросы
+    <span class="questions-heading-switch">(<a href="{% url 'questions:hot' %}">Лучшие вопросы</a>)</span>
+  </h2>
+  {% for question in questions %}
+    {% include "questions/includes/question_card.html" with question=question %} <!-- Даем понять, что question в карточке это question из нашего for -->
+  {% endfor %}
+
+  {% include "questions/includes/pagination.html" with page_obj=page_obj %}
+
+{% endblock content %}
