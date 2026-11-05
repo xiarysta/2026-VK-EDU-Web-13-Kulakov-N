@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ tag }} - WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  <h2> Тег: {{ tag }} </h2>
+  {% for question in tag_questions %}
+    {% include "questions/includes/question_card.html" with question=question %}
+
+  {% empty %}
+    <p>Вопросов с тегом «{{ tag }}» пока нет.</p>
+  {% endfor %}
+
+  {% include "questions/includes/pagination.html" with page_obj=page_obj %}
+
+{% endblock content %}
+

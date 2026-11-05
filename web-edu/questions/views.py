@@ -13,6 +13,16 @@ def hot(request):
     HOT_QUESTION_LIST = sorted(QUESTION_LIST, key=lambda question: question["rating"], reverse=True)
 
     page = paginate(HOT_QUESTION_LIST, request, per_page=4)
-    print(request)
 
     return render(request, "questions/hot.html", context={"hot_questions": page.object_list, "page_obj": page})
+
+def tag(request, tag_name):
+    TAG_QUESTION_LIST = [ question for question in QUESTION_LIST if tag_name in question["tags"] ]
+
+    page = paginate(TAG_QUESTION_LIST, request, per_page=4)
+    
+    return render(request, "questions/tag.html", context={
+        "tag_questions": page.object_list,
+        "page_obj": page,
+        "tag": tag_name,
+    })

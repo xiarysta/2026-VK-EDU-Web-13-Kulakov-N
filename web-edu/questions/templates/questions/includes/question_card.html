@@ -25,7 +25,9 @@
       <span>
         Теги:
         {% for tag in question.tags %}
-          <a href="tag.html">{{tag}}</a>
+          <a href="{% url 'questions:tag_detail' tag %}">{{tag}}</a>
+        {% empty %}
+          <span>не указаны</span>
         {% endfor %}
       </span>
       <time datetime="2026-10-19">19 октября</time>

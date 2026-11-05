@@ -14,6 +14,8 @@
   </h2>
   {% for question in questions %}
     {% include "questions/includes/question_card.html" with question=question %} <!-- Даем понять, что question в карточке это question из нашего for -->
+  {% empty %}
+    <p>Вопросов пока нет.</p>
   {% endfor %}
 
   {% include "questions/includes/pagination.html" with page_obj=page_obj %}
