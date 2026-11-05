@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .utils import paginate
-from .data import QUESTION_LIST
+from .data import QUESTION_LIST, ANSWER_LIST
+from django.http import Http404
 
 def index(request):
 
@@ -25,4 +26,25 @@ def tag(request, tag_name):
         "tag_questions": page.object_list,
         "page_obj": page,
         "tag": tag_name,
+    })
+
+def question_detail(request, question_id):
+    question = None
+
+    for item in QUESTION_LIST:
+        if item["id"] == question_id:
+            question = item
+            break
+
+    if question is None:
+        raise Http404("Вопрос не найден")
+
+    QUESTION_ANSWERS = [ answer for answer in ANSWER_LIST if answer["question_id"] == question_id ] 
+
+    page = paginate(QUESTION_ANSWERS, request, per_page=4)
+
+    return render(request, "questions/question_detail.html", context= {
+        "question": question,
+        "answers": page.object_list,
+        "page_obj": page,
     })

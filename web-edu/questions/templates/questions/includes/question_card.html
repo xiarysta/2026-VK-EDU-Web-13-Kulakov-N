@@ -1,6 +1,6 @@
 {% load static %}
 
-<article class="question-card" id="question-{{ question.id }}">
+<article class="question-card {% if is_detail %} question-detail {% endif %}" id="question-{{ question.id }}">
   <div class="question-vote">
     <img class="question-avatar" src="{% static 'questions/img/pumpkin.svg' %}"
     alt="Аватар автора вопроса">
@@ -13,9 +13,13 @@
   </div>
 
   <div class="question-content">
-    <h3>
-      <a href="question.html">{{question.title}}</a>
-    </h3>
+    {% if is_detail %}
+      <h2>{{ question.title }}</h2>
+    {% else %}
+      <h3>
+        <a href="{% url 'questions:question_detail' question.id %}">{{question.title}}</a>
+      </h3>
+    {% endif %}
     <p>
       {{question.text}}
     </p>

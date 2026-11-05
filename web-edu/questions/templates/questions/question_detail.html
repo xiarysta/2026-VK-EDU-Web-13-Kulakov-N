@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ question.title }} — WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  {% include "questions/includes/question_card.html" with question=question is_detail=True %}
+
+  <h2>Ответы</h2>
+  {% for answer in answers %}
+    {% include "questions/includes/answer_card.html" with answer=answer %}
+  {% empty %}
+    <p>Ответов пока нет.</p>
+  {% endfor %}
+
+  {% include "questions/includes/pagination.html" with page_obj=page_obj %}
+
+{% endblock content %}
