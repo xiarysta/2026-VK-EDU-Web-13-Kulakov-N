@@ -38,7 +38,7 @@ ENV/
 *.sqlite3-shm
 local_settings.py
 media/
-staticfiles/
+/web-edu/static/
 
 # Frontend dependencies and build output
 node_modules/

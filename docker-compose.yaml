@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./web-edu:/app
+      - media:/app/media
+
+volumes:
+  media:
