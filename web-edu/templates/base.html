@@ -25,14 +25,21 @@
       </div>
         
       <div class="header-user-info">
-        <img class="header-user-avatar" src="{% static 'questions/img/pumpkin.svg' %}" alt="Аватарка">
-        <div class="header-user-actions">
-          <span>Dr.Pepper</span>
-          <div>
-            <a href="profile.html">Настройки</a>
-            <a href="">Выйти</a>
+        {% if demo_authenticated %}
+          <img class="header-user-avatar" src="{% static 'questions/img/pumpkin.svg' %}" alt="Аватарка">
+          <div class="header-user-actions">
+            <span>Dr.Pepper</span>
+            <div>
+              <a href="{% url 'users:profile' %}">Настройки</a>
+              <a href="">Выйти</a>
+            </div>
           </div>
-        </div>
+        {% else %}
+          <div class="header-user-actions">
+            <a href="{% url 'users:login' %}">Войти</a>
+            <a href="{% url 'users:signup' %}">Регистрация</a>
+          </div>
+        {% endif %}
       </div>
     </header>
 

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Профиль - WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  <h2>Настройки: Dr.Pepper</h2>
+
+  <form class="settings-form" action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <p class="auth-form-error" role="alert">Не удалось сохранить изменения. Проверьте данные формы.</p>
+
+    <div class="settings-form-row">
+      <label for="user-login">Логин</label>
+      <div class="settings-form-field">
+        <input id="user-login" name="login" type="text"
+        value="dr_pepper" required maxlength="30">
+      </div>
+    </div>
+
+    <div class="settings-form-row">
+      <label for="user-email">Почта</label>
+      <div class="settings-form-field">
+        <input id="user-email" name="email" type="email"
+        value="drpepper@mail.ru" required maxlength="50" aria-invalid="true" aria-describedby="email-error">
+
+        <p class="auth-field-error" id="email-error">Этот email уже используется. Укажите другой адрес.</p>
+      </div>
+    </div>
+
+    <div class="settings-form-row">
+      <label for="user-nickname">Имя</label>
+      <div class="settings-form-field">
+        <input id="user-nickname" name="nickname" type="text"
+        value="Dr.Pepper" required maxlength="30">
+      </div>
+    </div>
+
+    <div class="settings-form-row">
+      <label for="user-avatar">Аватар</label>
+      <div class="settings-form-field">
+        <img class="settings-user-avatar" src="{% static 'questions/img/pumpkin.svg' %}" alt="Текущий аватар">
+
+        <input id="user-avatar" name="avatar" type="file" accept="image/png, image/jpeg" aria-describedby="avatar-hint">
+
+        <small id="avatar-hint">Выберите изображение PNG или JPEG.</small>
+      </div>
+    </div>
+
+    <button type="submit">Сохранить</button>
+
+  </form>
+{% endblock content %}

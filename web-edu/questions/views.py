@@ -7,7 +7,7 @@ def index(request):
 
     page = paginate(QUESTION_LIST, request, per_page=4)
 
-    return render(request, "questions/index.html", context={"questions": page.object_list, "page_obj": page})
+    return render(request, "questions/index.html", context={"questions": page.object_list, "page_obj": page, "demo_authenticated": True})
     # для пагинации мы сначала получаем страницу с нужным номером, затем в контекст передаем список вопросов данной страницы и сам обьект, к-ый знает все обо всех вопросах на ней
 
 def hot(request):
@@ -15,7 +15,7 @@ def hot(request):
 
     page = paginate(HOT_QUESTION_LIST, request, per_page=4)
 
-    return render(request, "questions/hot.html", context={"hot_questions": page.object_list, "page_obj": page})
+    return render(request, "questions/hot.html", context={"hot_questions": page.object_list, "page_obj": page, "demo_authenticated": True})
 
 def tag(request, tag_name):
     TAG_QUESTION_LIST = [ question for question in QUESTION_LIST if tag_name in question["tags"] ]
@@ -26,6 +26,7 @@ def tag(request, tag_name):
         "tag_questions": page.object_list,
         "page_obj": page,
         "tag": tag_name,
+        "demo_authenticated": True,
     })
 
 def question_detail(request, question_id):
@@ -47,7 +48,8 @@ def question_detail(request, question_id):
         "question": question,
         "answers": page.object_list,
         "page_obj": page,
+        "demo_authenticated": True,
     })
 
 def ask(request):
-    return render(request, "questions/ask.html")
+    return render(request, "questions/ask.html", context={"demo_authenticated": False})
