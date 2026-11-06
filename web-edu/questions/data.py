@@ -150,3 +150,6 @@ ANSWER_LIST = [
         "is_correct": False,
     },
 ]
+
+for question in QUESTION_LIST:
+  question["answers_count"] = sum (1 for answer in ANSWER_LIST if answer["question_id"] == question["id"])

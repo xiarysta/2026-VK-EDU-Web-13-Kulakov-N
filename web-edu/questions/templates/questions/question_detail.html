@@ -17,4 +17,16 @@
 
   {% include "questions/includes/pagination.html" with page_obj=page_obj %}
 
+  <form class="answer-form" action="{% url 'questions:question_detail' question.id %}" method="post">
+
+    {% csrf_token %}
+
+    <label class="visually-hidden" for="answer-text">Ваш ответ</label>
+
+    <textarea id="answer-text" name="answer" rows="4" placeholder="Введите ваш ответ…" required maxlength="5000"
+    ></textarea>
+
+    <button type="submit">Ответить</button>
+  </form>
+
 {% endblock content %}

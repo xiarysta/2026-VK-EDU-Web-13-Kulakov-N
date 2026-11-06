@@ -25,7 +25,7 @@
     </p>
 
     <div class="question-meta">
-      <a href="question.html">Ответы (3)</a>
+      <a href="{% url 'questions:question_detail' question.id %}">Ответы ({{question.answers_count}})</a>
       <span>
         Теги:
         {% for tag in question.tags %}
