@@ -21,7 +21,7 @@
 
       <div class="header-search">
         <input type="search" placeholder="Поиск вопросов">
-        <a class="header-ask-btn" href="ask.html"> Спросить! </a>
+        <a class="header-ask-btn" href="{% url 'questions:ask' %}"> Спросить! </a>
       </div>
         
       <div class="header-user-info">
@@ -45,12 +45,12 @@
       <aside class="sidebar">
         <h2> Популярные теги</h2>
         <div class="sidebar-popular-tags"> 
-          <a href="">Python</a>
-          <a href="">HTML</a>
-          <a href="">CSS</a>
-          <a href="">Django</a>
-          <a href="">MySQL</a>
-          <a href="">TechnoPark</a>
+          <a href="{% url 'questions:tag_detail' 'Python' %}">Python</a>
+          <a href="{% url 'questions:tag_detail' 'HTML' %}">HTML</a>
+          <a href="{% url 'questions:tag_detail' 'CSS' %}">CSS</a>
+          <a href="{% url 'questions:tag_detail' 'Django' %}">Django</a>
+          <a href="{% url 'questions:tag_detail' 'MySQL' %}">MySQL</a>
+          <a href="{% url 'questions:tag_detail' 'TechnoPark' %}">TechnoPark</a>
         </div>
 
         <h2> Лучшие участники </h2>

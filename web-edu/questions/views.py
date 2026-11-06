@@ -48,3 +48,6 @@ def question_detail(request, question_id):
         "answers": page.object_list,
         "page_obj": page,
     })
+
+def ask(request):
+    return render(request, "questions/ask.html")
