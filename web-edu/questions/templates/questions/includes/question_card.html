@@ -1,0 +1,40 @@
+{% load static %}
+
+<article class="question-card {% if is_detail %} question-detail {% endif %}" id="question-{{ question.id }}">
+  <div class="question-vote">
+    <img class="question-avatar" src="{% static 'questions/img/pumpkin.svg' %}"
+    alt="Аватар автора вопроса">
+
+    <div class="question-vote-controls">
+      <button type="button" aria-label="Поставить плюс">▲</button>
+      <span> {{question.rating}} </span>
+      <button type="button" aria-label="Поставить минус">▼</button>
+    </div>
+  </div>
+
+  <div class="question-content">
+    {% if is_detail %}
+      <h2>{{ question.title }}</h2>
+    {% else %}
+      <h3>
+        <a href="{% url 'questions:question_detail' question.id %}">{{question.title}}</a>
+      </h3>
+    {% endif %}
+    <p>
+      {{question.text}}
+    </p>
+
+    <div class="question-meta">
+      <a href="{% url 'questions:question_detail' question.id %}">Ответы ({{question.answers_count}})</a>
+      <span>
+        Теги:
+        {% for tag in question.tags %}
+          <a href="{% url 'questions:tag_detail' tag %}">{{tag}}</a>
+        {% empty %}
+          <span>не указаны</span>
+        {% endfor %}
+      </span>
+      <time datetime="2026-10-19">19 октября</time>
+    </div>
+  </div>
+</article>

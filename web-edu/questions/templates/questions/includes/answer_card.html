@@ -1,0 +1,28 @@
+{% load static %}
+
+<article class="question-card answer-card" id="answer-{{answer.id}}">
+  <div class="question-vote">
+    <img class="question-avatar"
+    src="{% static 'questions/img/pumpkin.svg' %}"
+    alt="Аватар автора ответа">
+
+    <div class="question-vote-controls">
+      <button type="button" aria-label="Поставить плюс">▲</button>
+      <span>{{answer.rating}}</span>
+      <button type="button" aria-label="Поставить минус">▼</button>
+    </div>
+  </div>
+
+  <div class="question-content">
+    <p>
+      {{answer.text}}
+    </p>
+
+    <time datetime="2026-10-20"> 20 октября</time>
+
+    <label class="answer-correct">
+      <input type="checkbox" {% if answer.is_correct %} checked {% endif %}>
+        Правильный ответ
+    </label>
+  </div>
+</article>

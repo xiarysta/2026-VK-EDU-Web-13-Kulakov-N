@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Регистрация - WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  <h2>Регистрация</h2>
+
+        <form class="register-form" action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data">
+
+          {% csrf_token %}
+
+          <p class="auth-form-error" role="alert">Не удалось создать аккаунт. Проверьте данные формы.</p>
+
+          <div class="register-form-row">
+            <label for="register-username">Логин</label>
+
+            <div class="register-form-field">
+              <input id="register-username" name="username" type="text" placeholder="Придумайте логин"
+              autocomplete="username" required maxlength="30" aria-describedby="username-hint">
+              <small id="username-hint">Не более 30 символов.</small>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-email">Почта</label>
+
+            <div class="register-form-field">
+              <input id="register-email" name="email" type="email" value="drpepper@mail.ru"
+              autocomplete="email" required maxlength="254" aria-invalid="true" aria-describedby="register-email-error">
+              <p class="auth-field-error" id="register-email-error">Этот email уже используется. Укажите другой адрес.</p>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-nickname">Имя</label>
+
+            <div class="register-form-field">
+              <input id="register-nickname" name="nickname" type="text" placeholder="Как вас называть?"
+              autocomplete="nickname" required maxlength="30" aria-describedby="nickname-hint">
+              <small id="nickname-hint">Имя, которое увидят другие участники.</small>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-password">Пароль</label>
+
+            <div class="register-form-field">
+              <input id="register-password" name="password" type="password" placeholder="Придумайте пароль"
+              autocomplete="new-password" required minlength="8" aria-describedby="password-hint">
+              <small id="password-hint">Не менее 8 символов.</small>
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-password-repeat">Повтор пароля</label>
+
+            <div class="register-form-field">
+              <input id="register-password-repeat" name="password_repeat" type="password" placeholder="Повторите пароль"
+              autocomplete="new-password" required minlength="8">
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-avatar">Аватар</label>
+
+            <div class="register-form-field">
+              <input id="register-avatar" name="avatar" type="file" accept="image/png, image/jpeg"
+              aria-describedby="register-avatar-hint">
+              <small id="register-avatar-hint">Необязательно. Выберите изображение PNG или JPEG.</small>
+            </div>
+          </div>
+
+          <button type="submit">Зарегистрироваться</button>
+
+          <a class="auth-form-link" href="{% url 'users:login' %}">Уже есть аккаунт? Войти</a>
+
+        </form>
+{% endblock content %}

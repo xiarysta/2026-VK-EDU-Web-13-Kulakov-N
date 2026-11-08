@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Лучшие вопросы - WhyAndWhat {% endblock title %}
+
+{% block content %}
+  <h2 class="questions-heading">
+    Лучшие вопросы
+    <span class="questions-heading-switch">(<a href="{% url 'questions:index' %}">Новые вопросы</a>)</span>
+  </h2>
+
+  {% for question in hot_questions %}
+    {% include "questions/includes/question_card.html" with question=question%}
+  {% empty %}
+    <p>Лучших вопросов пока нет.</p>
+  {% endfor %}
+
+  {% include "questions/includes/pagination.html" with page_obj=page_obj %}
+
+{% endblock content %}

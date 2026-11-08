@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Вход - WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  <h2>Вход</h2>
+
+  <form class="login-form" action="{% url 'users:login' %}" method="post">
+
+    {% csrf_token %}
+
+    <p class="auth-form-error" role="alert">Неверный логин или пароль. Попробуйте ещё раз.</p>
+
+    <div class="login-form-row">
+      <label for="login-username">Логин</label>
+
+      <div class="login-form-field">
+        <input id="login-username" name="username" type="text" placeholder="Введите логин"
+        autocomplete="username" required maxlength="30">
+      </div>
+    </div>
+
+    <div class="login-form-row">
+      <label for="login-password">Пароль</label>
+
+      <div class="login-form-field">
+        <input id="login-password" name="password" type="password" placeholder="Введите пароль"
+        autocomplete="current-password" required>
+      </div>
+    </div>
+
+    <button type="submit">Войти</button>
+
+    <a class="auth-form-link" href="{% url 'users:signup' %}">Создать новый аккаунт</a>
+
+  </form>
+{% endblock content %}

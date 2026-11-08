@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Новый вопрос - WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  <h2>Новый вопрос</h2>
+  <form class="ask-form" action="{% url 'questions:ask' %}" method="post">
+
+    {% csrf_token %}
+
+    <p class="auth-form-error" role="alert">Не удалось добавить вопрос. Проверьте данные формы.</p>
+
+    <div class="ask-form-row">
+      <label for="question-title">Заголовок</label>
+      <div class="ask-form-field">
+        <input id="question-title" name="title" type="text" placeholder="Как построить парк на луне?"
+        required maxlength="150" aria-invalid="true" aria-describedby="title-hint title-error">
+
+        <small id="title-hint">Не более 150 символов.</small>
+
+        <p class="auth-field-error" id="title-error">Введите заголовок вопроса.</p>
+      </div>
+    </div>
+
+    <div class="ask-form-row">
+      <label for="question-text">Текст</label>
+      <div class="ask-form-field">
+        <textarea id="question-text" name="text" rows="10" placeholder="Опишите ваш вопрос подробнее." required maxlength="10000" aria-describedby="text-hint"></textarea>
+
+        <small id="text-hint"> Не более 10 000 символов.</small>
+      </div>
+    </div>
+
+    <div class="ask-form-row">
+      <label for="question-tags">Теги</label>
+      <div class="ask-form-field">
+        <input id="question-tags" name="tags" type="text" placeholder="Укажите теги через запятую."
+        required maxlength="100" aria-describedby="tags-hint">
+
+        <small id="tags-hint">Не более 100 символов.</small>
+      </div>
+    </div>
+          
+    <button type="submit">Задать!</button>
+
+  </form>
+{% endblock content %}
