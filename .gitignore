@@ -1,6 +1,7 @@
 # Editors and operating systems
 .idea/
 .vscode/
+.editorconfig
 .DS_Store
 Thumbs.db
 
