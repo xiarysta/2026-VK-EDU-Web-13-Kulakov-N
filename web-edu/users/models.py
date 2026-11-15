@@ -18,5 +18,8 @@ class UserProfile(models.Model):
     )
 
     class Meta:
-        verbose_name = "Профиль"
-        verbose_name_plural = "Профили"
+        verbose_name = "Профиль пользователя"
+        verbose_name_plural = "Профили пользователей"
+
+    def __str__(self):
+        return f"{self.name} — пользователь #{self.user_id}"
