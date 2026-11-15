@@ -1,5 +1,6 @@
 asgiref==3.13.0
 Django==6.1.2
+django-debug-toolbar==8.0.0
 pillow==13.0.0
 psycopg==3.3.9
 psycopg-binary==3.3.9

@@ -15,11 +15,13 @@
 
   <div class="question-content">
     <p>
-      {{answer.text}}
+      {{answer.content}}
     </p>
 
     <div class="question-meta">
-      <time datetime="2026-10-20">20 октября</time>
+      <time datetime="{{ answer.created_at|date:'c' }}">
+        {{ answer.created_at|date:"d.m.Y H:i" }}
+      </time>
     </div>
 
     <label class="answer-correct">

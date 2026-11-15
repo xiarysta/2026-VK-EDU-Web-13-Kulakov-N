@@ -21,20 +21,22 @@
       </h3>
     {% endif %}
     <p>
-      {{question.text}}
+      {{question.content}}
     </p>
 
     <div class="question-meta">
       <a href="{% url 'questions:question_detail' question.id %}">Ответы ({{question.answers_count}})</a>
       <span>
         Теги:
-        {% for tag in question.tags %}
-          <a href="{% url 'questions:tag_detail' tag %}">{{tag}}</a>
+        {% for tag in question.tags.all %}
+          <a href="{% url 'questions:tag_detail' tag.name %}">{{tag.name}}</a>
         {% empty %}
           <span>не указаны</span>
         {% endfor %}
       </span>
-      <time datetime="2026-10-19">19 октября</time>
+      <time datetime="{{ question.created_at|date:'c' }}">
+        {{ question.created_at|date:"d.m.Y H:i" }}
+      </time>
     </div>
   </div>
 </article>

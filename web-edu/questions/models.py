@@ -1,8 +1,10 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.constraints import UniqueConstraint, CheckConstraint
+from .managers import QuestionManager, AnswerManager
 
 class Question(models.Model):
+    objects = QuestionManager()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -29,6 +31,7 @@ class Question(models.Model):
         return f"Вопрос #{self.id}: {self.title}"
 
 class Answer(models.Model):
+    objects = AnswerManager()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

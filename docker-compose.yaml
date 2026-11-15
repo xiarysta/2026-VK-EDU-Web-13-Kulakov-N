@@ -1,8 +1,19 @@
 services:
+  db:
+    image: postgres:17
+    env_file:
+      - .env.docker
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   web:
     build: .
+    depends_on:
+      - db
     env_file:
-      - .env
+      - .env.docker
     ports:
       - "8000:8000"
     volumes:
@@ -11,3 +22,4 @@ services:
 
 volumes:
   media:
+  postgres_data:
