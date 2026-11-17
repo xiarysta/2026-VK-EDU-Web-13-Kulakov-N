@@ -17,7 +17,7 @@
 
   {% include "questions/includes/pagination.html" with page_obj=page_obj %}
 
-  <form class="answer-form" action="{% url 'questions:question_detail' question.id %}" method="post">
+  <form class="answer-form" action="{{ question.get_absolute_url }}" method="post">
 
     {% csrf_token %}
 

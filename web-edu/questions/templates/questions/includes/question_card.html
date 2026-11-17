@@ -17,7 +17,7 @@
       <h2>{{ question.title }}</h2>
     {% else %}
       <h3>
-        <a href="{% url 'questions:question_detail' question.id %}">{{question.title}}</a>
+        <a href="{{ question.get_absolute_url }}">{{question.title}}</a>
       </h3>
     {% endif %}
     <p>
@@ -25,7 +25,7 @@
     </p>
 
     <div class="question-meta">
-      <a href="{% url 'questions:question_detail' question.id %}">Ответы ({{question.answers_count}})</a>
+      <a href="{{question.get_absolute_url}}">Ответы ({{question.answers_count}})</a>
       <span>
         Теги:
         {% for tag in question.tags.all %}

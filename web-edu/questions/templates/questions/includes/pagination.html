@@ -10,9 +10,16 @@
       {% endif %}
       
 
-      {% for number in page_obj.paginator.page_range %}
+      {% for number in page_obj.page_numbers %}
         <li>
-          <a href="?page={{number}}" {% if number == page_obj.number %} aria-current="page" {% endif %}> {{number}} </a>
+          {% if number == page_obj.paginator.ELLIPSIS %}
+            <span>{{ number }}</span>
+          {% else %}
+            <a href="?page={{ number }}"
+               {% if number == page_obj.number %}aria-current="page"{% endif %}>
+              {{ number }}
+            </a>
+          {% endif %}
         </li>
       {% endfor %}
 
