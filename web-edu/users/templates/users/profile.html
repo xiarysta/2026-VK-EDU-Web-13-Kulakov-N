@@ -8,7 +8,7 @@
 {% block content %}
   <h2>Настройки: {{ user.username }}</h2>
 
-  <form class="settings-form" action="{% url 'core:profile' %}" method="post" enctype="multipart/form-data">
+  <form class="settings-form" action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
     {% if form.errors %}
@@ -75,7 +75,7 @@
         <input id="user-avatar" name="avatar" type="file" accept="image/png, image/jpeg"
           aria-describedby="avatar-hint{% if form.avatar.errors %} avatar-error{% endif %}"
           {% if form.avatar.errors %}aria-invalid="true"{% endif %}>
-        <small id="avatar-hint">Выберите изображение PNG или JPEG до 5 МБ. Без нового файла текущий аватар сохранится.</small>
+        <small id="avatar-hint">Выберите изображение PNG или JPEG.</small>
         {% if form.avatar.errors %}
           <div id="avatar-error" role="alert">
             {% for error in form.avatar.errors %}

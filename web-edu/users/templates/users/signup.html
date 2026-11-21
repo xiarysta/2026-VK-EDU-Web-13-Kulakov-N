@@ -9,7 +9,7 @@
   <h2>Регистрация</h2>
   <p>* — обязательные поля.</p>
 
-        <form class="register-form" action="{% url 'core:signup' %}" method="post" enctype="multipart/form-data">
+        <form class="register-form" action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data">
 
           {% csrf_token %}
 
@@ -141,7 +141,7 @@
 
           <button type="submit">Зарегистрироваться</button>
 
-          <a class="auth-form-link" href="{% url 'core:login' %}">Уже есть аккаунт? Войти</a>
+          <a class="auth-form-link" href="{% url 'users:login' %}">Уже есть аккаунт? Войти</a>
 
         </form>
 {% endblock content %}

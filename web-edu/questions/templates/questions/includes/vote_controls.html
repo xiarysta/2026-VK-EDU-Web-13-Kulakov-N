@@ -1,9 +1,0 @@
-<div class="question-vote-controls" data-vote-url="{{ vote_url }}" data-target="{{ target.pk }}">
-  <button type="button" data-vote="1" aria-label="Поставить плюс"
-    {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"
-    {% elif target.user_vote %}disabled title="Вы уже голосовали"{% endif %}>▲</button>
-  <span data-rating aria-live="polite">{{ target.rating }}</span>
-  <button type="button" data-vote="-1" aria-label="Поставить минус"
-    {% if not user.is_authenticated %}disabled title="Войдите, чтобы голосовать"
-    {% elif target.user_vote %}disabled title="Вы уже голосовали"{% endif %}>▼</button>
-</div>

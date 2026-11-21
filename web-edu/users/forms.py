@@ -7,24 +7,10 @@ from django.contrib import auth
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.core.validators import FileExtensionValidator
 
-from users.models import UserProfile
+from .models import UserProfile
 
 User = auth.get_user_model()
-
-
-def validate_avatar_size(file):
-    if file.size > 5 * 1024 * 1024:
-        raise forms.ValidationError("Размер аватара не должен превышать 5 МБ.")
-
-
-class AvatarFormMixin:
-    def clean_avatar(self):
-        avatar = self.cleaned_data.get("avatar")
-        if avatar and avatar.image.format not in {"PNG", "JPEG"}:
-            raise forms.ValidationError("Выберите изображение PNG или JPEG.")
-        return avatar
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30)
@@ -36,7 +22,7 @@ class LoginForm(forms.Form):
         next_url = self.cleaned_data.get("next", "")
 
         if url_has_allowed_host_and_scheme(url=next_url, allowed_hosts=set(), require_https=True):
-            return next_url
+            return next_url;
 
         return reverse("questions:index")
 
@@ -60,18 +46,17 @@ class LogoutForm(forms.Form):
         next_url = self.cleaned_data.get("next", "")
 
         if url_has_allowed_host_and_scheme(url=next_url, allowed_hosts=set(), require_https=True):
-            if urlsplit(next_url).path != reverse("core:profile"):
+            if urlsplit(next_url).path != reverse("users:profile"):
                 return next_url
-
+        
         return reverse("questions:index")
 
-class SignupForm(AvatarFormMixin, forms.ModelForm):
-    avatar = forms.ImageField(required=False, validators=[FileExtensionValidator(["png", "jpg", "jpeg"]), validate_avatar_size])
+class SignupForm(forms.ModelForm):
     email = forms.EmailField(max_length=254, required=False)
     nickname = forms.CharField(max_length=50)
     password = forms.CharField(strip=False, widget=forms.PasswordInput())
     password_repeat = forms.CharField(strip=False, widget=forms.PasswordInput())
-
+    
     class Meta:
         model = User
         fields = ("username", "email")
@@ -95,7 +80,7 @@ class SignupForm(AvatarFormMixin, forms.ModelForm):
                 self.add_error("password", error)
 
         return cleaned_data
-
+    
     @transaction.atomic
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -106,14 +91,12 @@ class SignupForm(AvatarFormMixin, forms.ModelForm):
 
             UserProfile.objects.create(
                 user=user,
-                name=self.cleaned_data["nickname"],
-                avatar=self.cleaned_data.get("avatar") or "",
+                name=self.cleaned_data["nickname"]
             )
 
         return user
 
-class ProfileForm(AvatarFormMixin, forms.ModelForm):
-    avatar = forms.ImageField(required=False, validators=[FileExtensionValidator(["png", "jpg", "jpeg"]), validate_avatar_size])
+class ProfileForm(forms.ModelForm):
     email = forms.EmailField(max_length=254, required=False)
     nickname = forms.CharField(max_length=50)
 
@@ -135,9 +118,6 @@ class ProfileForm(AvatarFormMixin, forms.ModelForm):
 
         if commit:
 
-            defaults = {"name": self.cleaned_data["nickname"]}
-            if self.cleaned_data.get("avatar"):
-                defaults["avatar"] = self.cleaned_data["avatar"]
-            UserProfile.objects.update_or_create(user=user, defaults=defaults)
+            UserProfile.objects.update_or_create(user=user, defaults={"name": self.cleaned_data["nickname"]})
 
         return user

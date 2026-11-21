@@ -302,8 +302,8 @@ input[type="search"]:focus {
 .question-content h3 {
   margin: 0 0 8px;
   font-size: 1.25rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
   white-space: nowrap;
 }
 
@@ -887,17 +887,4 @@ label[for="user-avatar"] {
   .login-form button, .register-form button, .auth-form-link {
     margin-left: 0;
   }
-}
-
-.ajax-error {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  max-width: min(420px, calc(100vw - 48px));
-  padding: 16px 20px;
-  background: #3d2028;
-  border: 1px solid #ff8a8a;
-  border-radius: 12px;
-  color: #ffdddd;
-  z-index: 1000;
 }

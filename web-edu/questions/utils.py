@@ -1,15 +1,4 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db.models import OuterRef, Subquery
-
-
-def with_user_vote(queryset, user, kind):
-    if not user.is_authenticated:
-        return queryset
-    from .models import AnswerVote, QuestionVote
-    vote_model = QuestionVote if kind == "question" else AnswerVote
-    return queryset.annotate(user_vote=Subquery(
-        vote_model.objects.filter(user=user, **{f"{kind}_id": OuterRef("pk")}).values("value")[:1]
-    ))
 
 def paginate(objects_list, request, per_page=10):
     paginator = Paginator(objects_list, per_page) # создаем обьект, который знает все о разбиениях на страницы

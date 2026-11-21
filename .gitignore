@@ -44,6 +44,3 @@ media/
 # Frontend dependencies and build output
 node_modules/
 dist/
-
-# Local verification artifacts
-.artifacts/

@@ -6,17 +6,17 @@ class QuestionManager(models.Manager):
 
     def with_rating(self):
         from .models import QuestionVote
-
+    
         votes = (
             QuestionVote.objects.filter(question_id=OuterRef("pk")) \
                 .order_by().values("question_id").annotate(total=Sum("value")).values("total")
         )
-
+    
         return self.get_queryset().annotate(rating=Coalesce(Subquery(votes), 0))
 
     def with_details(self):
         return self.with_rating().annotate(answers_count=Count("answer")) \
-            .select_related("user__userprofile").prefetch_related("tags")
+            .prefetch_related("tags")
 
     def new(self):
         return self.with_details().order_by("-created_at", "-id")
@@ -25,7 +25,7 @@ class QuestionManager(models.Manager):
         return self.with_details().order_by("-rating", "-created_at", "-id")
 
     def by_tag(self, tag_name):
-
+        
         return self.with_details().filter(tags__name=tag_name).order_by("-created_at", "-id")
 
 class AnswerManager(models.Manager):
@@ -41,4 +41,4 @@ class AnswerManager(models.Manager):
         return self.get_queryset().annotate(rating=Coalesce(Subquery(votes), 0))
 
     def for_question(self, question_id):
-        return self.with_rating().select_related("user__userprofile").filter(question_id=question_id).order_by("created_at", "id")
+        return self.with_rating().filter(question_id=question_id).order_by("created_at", "id")
