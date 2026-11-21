@@ -2,15 +2,10 @@
 
 <article class="question-card answer-card" id="answer-{{answer.id}}">
   <div class="question-vote">
-    <img class="question-avatar"
-    src="{% static 'questions/img/pumpkin.svg' %}"
-    alt="Аватар автора ответа">
+    {% include "includes/avatar.html" with account=answer.user avatar_class="question-avatar" %}
 
-    <div class="question-vote-controls">
-      <button type="button" aria-label="Поставить плюс">▲</button>
-      <span>{{answer.rating}}</span>
-      <button type="button" aria-label="Поставить минус">▼</button>
-    </div>
+    {% url 'questions:answer_vote' as vote_url %}
+    {% include "questions/includes/vote_controls.html" with target=answer vote_url=vote_url %}
   </div>
 
   <div class="question-content">
@@ -24,9 +19,15 @@
       </time>
     </div>
 
-    <label class="answer-correct">
-      <input type="checkbox" {% if answer.is_correct %} checked {% endif %}>
+    {% if user.is_authenticated and user.pk == question.user_id %}
+      <label class="answer-correct">
+        <input type="checkbox" data-correct-url="{% url 'questions:correct_answer' %}"
+          data-question="{{ question.pk }}" data-answer="{{ answer.pk }}"
+          {% if answer.is_correct %}checked{% endif %}>
         Правильный ответ
-    </label>
+      </label>
+    {% elif answer.is_correct %}
+      <span class="answer-correct">✓ Правильный ответ</span>
+    {% endif %}
   </div>
 </article>

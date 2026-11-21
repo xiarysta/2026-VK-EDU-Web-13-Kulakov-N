@@ -2,14 +2,10 @@
 
 <article class="question-card {% if is_detail %} question-detail {% endif %}" id="question-{{ question.id }}">
   <div class="question-vote">
-    <img class="question-avatar" src="{% static 'questions/img/pumpkin.svg' %}"
-    alt="Аватар автора вопроса">
+    {% include "includes/avatar.html" with account=question.user avatar_class="question-avatar" %}
 
-    <div class="question-vote-controls">
-      <button type="button" aria-label="Поставить плюс">▲</button>
-      <span> {{question.rating}} </span>
-      <button type="button" aria-label="Поставить минус">▼</button>
-    </div>
+    {% url 'questions:question_vote' as vote_url %}
+    {% include "questions/includes/vote_controls.html" with target=question vote_url=vote_url %}
   </div>
 
   <div class="question-content">

@@ -22,7 +22,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("questions.urls")), # если префикс = '', то иди ищи в questions/urls.py
-    path('', include("users.urls")),
+    path('', include("core.urls")),
 ]
 
 if settings.DEBUG:

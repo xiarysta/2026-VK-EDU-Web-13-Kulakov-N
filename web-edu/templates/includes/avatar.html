@@ -1,0 +1,6 @@
+{% load static %}
+{% if account.userprofile.avatar %}
+  <img class="{{ avatar_class }}" src="{{ account.userprofile.avatar.url }}" alt="Аватар {{ account.username }}">
+{% else %}
+  <img class="{{ avatar_class }}" src="{% static 'questions/img/pumpkin.svg' %}" alt="Аватар {{ account.username }}">
+{% endif %}
