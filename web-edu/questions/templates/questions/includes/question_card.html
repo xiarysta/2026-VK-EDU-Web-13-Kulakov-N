@@ -2,13 +2,20 @@
 
 <article class="question-card {% if is_detail %} question-detail {% endif %}" id="question-{{ question.id }}">
   <div class="question-vote">
-    <img class="question-avatar" src="{% static 'questions/img/pumpkin.svg' %}"
-    alt="Аватар автора вопроса">
+    {% if question.user.userprofile.avatar %}
+        <img class="question-avatar"
+        src="{{ question.user.userprofile.avatar.url }}"
+        alt="Аватар автора вопроса">
+    {% else %}
+        <img class="question-avatar"
+        src="{% static 'questions/img/pumpkin.svg' %}"
+        alt="Аватар автора вопроса">
+    {% endif %}
 
-    <div class="question-vote-controls">
-      <button type="button" aria-label="Поставить плюс">▲</button>
-      <span> {{question.rating}} </span>
-      <button type="button" aria-label="Поставить минус">▼</button>
+    <div class="question-vote-controls" data-vote-url="{{ question.get_absolute_url }}" data-action="vote_question">
+      <button type="button" data-value="1" class="{% if question.user_vote == 1 %}vote-active{% endif %}" aria-pressed="{% if question.user_vote == 1 %}true{% else %}false{% endif %}" aria-label="Поставить плюс" {% if not user.is_authenticated %}disabled title="Войдите, чтобы оценить вопрос"{% elif question.user_vote == 1 %}disabled title="Вы уже поставили эту оценку"{% endif %}>▲</button>
+      <span data-rating aria-live="polite"> {{question.rating}} </span>
+      <button type="button" data-value="-1" class="{% if question.user_vote == -1 %}vote-active{% endif %}" aria-pressed="{% if question.user_vote == -1 %}true{% else %}false{% endif %}" aria-label="Поставить минус" {% if not user.is_authenticated %}disabled title="Войдите, чтобы оценить вопрос"{% elif question.user_vote == -1 %}disabled title="Вы уже поставили эту оценку"{% endif %}>▼</button>
     </div>
   </div>
 

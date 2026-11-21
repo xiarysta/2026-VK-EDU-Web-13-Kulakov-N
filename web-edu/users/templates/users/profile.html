@@ -75,7 +75,7 @@
         <input id="user-avatar" name="avatar" type="file" accept="image/png, image/jpeg"
           aria-describedby="avatar-hint{% if form.avatar.errors %} avatar-error{% endif %}"
           {% if form.avatar.errors %}aria-invalid="true"{% endif %}>
-        <small id="avatar-hint">Выберите изображение PNG или JPEG.</small>
+        <small id="avatar-hint">Выберите изображение PNG или JPEG размером не более 5 МБ.</small>
         {% if form.avatar.errors %}
           <div id="avatar-error" role="alert">
             {% for error in form.avatar.errors %}

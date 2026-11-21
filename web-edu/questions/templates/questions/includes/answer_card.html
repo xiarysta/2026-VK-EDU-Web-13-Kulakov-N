@@ -2,14 +2,20 @@
 
 <article class="question-card answer-card" id="answer-{{answer.id}}">
   <div class="question-vote">
-    <img class="question-avatar"
-    src="{% static 'questions/img/pumpkin.svg' %}"
-    alt="Аватар автора ответа">
+    {% if answer.user.userprofile.avatar %}
+      <img class="question-avatar"
+      src="{{ answer.user.userprofile.avatar.url }}"
+      alt="Аватар автора ответа">
+    {% else %}
+      <img class="question-avatar"
+      src="{% static 'questions/img/pumpkin.svg' %}"
+      alt="Аватар автора ответа">
+    {% endif %}
 
-    <div class="question-vote-controls">
-      <button type="button" aria-label="Поставить плюс">▲</button>
-      <span>{{answer.rating}}</span>
-      <button type="button" aria-label="Поставить минус">▼</button>
+    <div class="question-vote-controls" data-vote-url="{{ question.get_absolute_url }}" data-action="vote_answer" data-answer-id="{{ answer.pk }}">
+      <button type="button" data-value="1" class="{% if answer.user_vote == 1 %}vote-active{% endif %}" aria-pressed="{% if answer.user_vote == 1 %}true{% else %}false{% endif %}" aria-label="Поставить плюс" {% if not user.is_authenticated %}disabled title="Войдите, чтобы оценить ответ"{% elif answer.user_vote == 1 %}disabled title="Вы уже поставили эту оценку"{% endif %}>▲</button>
+      <span data-rating aria-live="polite">{{answer.rating}}</span>
+      <button type="button" data-value="-1" class="{% if answer.user_vote == -1 %}vote-active{% endif %}" aria-pressed="{% if answer.user_vote == -1 %}true{% else %}false{% endif %}" aria-label="Поставить минус" {% if not user.is_authenticated %}disabled title="Войдите, чтобы оценить ответ"{% elif answer.user_vote == -1 %}disabled title="Вы уже поставили эту оценку"{% endif %}>▼</button>
     </div>
   </div>
 
@@ -24,9 +30,13 @@
       </time>
     </div>
 
-    <label class="answer-correct">
-      <input type="checkbox" {% if answer.is_correct %} checked {% endif %}>
-        Правильный ответ
-    </label>
+    {% if user.is_authenticated and user.id == question.user_id %}
+      <label class="answer-correct">
+        <input type="checkbox" data-correct-url="{{ question.get_absolute_url }}" data-answer-id="{{ answer.pk }}" {% if answer.is_correct %} checked {% endif %}>
+          Правильный ответ
+      </label>
+    {% elif answer.is_correct %}
+      <span class="answer-correct">✓ Правильный ответ</span>
+    {% endif %}
   </div>
 </article>

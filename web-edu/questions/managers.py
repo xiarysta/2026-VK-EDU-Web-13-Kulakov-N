@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Count, OuterRef, Subquery, Sum
+from django.db.models import Count, OuterRef, Subquery, Sum, Value
 from django.db.models.functions import Coalesce
 
 class QuestionManager(models.Manager):
@@ -14,19 +14,26 @@ class QuestionManager(models.Manager):
     
         return self.get_queryset().annotate(rating=Coalesce(Subquery(votes), 0))
 
-    def with_details(self):
-        return self.with_rating().annotate(answers_count=Count("answer")) \
-            .prefetch_related("tags")
+    def with_details(self, user=None):
+        from .models import QuestionVote
 
-    def new(self):
-        return self.with_details().order_by("-created_at", "-id")
+        questions = self.with_rating().annotate(answers_count=Count("answer")) \
+            .select_related("user__userprofile").prefetch_related("tags")
 
-    def hot(self):
-        return self.with_details().order_by("-rating", "-created_at", "-id")
+        if user and user.is_authenticated:
+            votes = QuestionVote.objects.filter(user=user, question_id=OuterRef("pk")).values("value")[:1]
+            return questions.annotate(user_vote=Coalesce(Subquery(votes), 0))
+        return questions.annotate(user_vote=Value(0))
 
-    def by_tag(self, tag_name):
+    def new(self, user=None):
+        return self.with_details(user=user).order_by("-created_at", "-id")
+
+    def hot(self, user=None):
+        return self.with_details(user=user).order_by("-rating", "-created_at", "-id")
+
+    def by_tag(self, tag_name, user=None):
         
-        return self.with_details().filter(tags__name=tag_name).order_by("-created_at", "-id")
+        return self.with_details(user=user).filter(tags__name=tag_name).order_by("-created_at", "-id")
 
 class AnswerManager(models.Manager):
 
@@ -40,5 +47,13 @@ class AnswerManager(models.Manager):
 
         return self.get_queryset().annotate(rating=Coalesce(Subquery(votes), 0))
 
-    def for_question(self, question_id):
-        return self.with_rating().filter(question_id=question_id).order_by("created_at", "id")
+    def for_question(self, question_id, user=None):
+        from .models import AnswerVote
+
+        answers = self.with_rating().select_related("user__userprofile") \
+            .filter(question_id=question_id).order_by("created_at", "id")
+
+        if user and user.is_authenticated:
+            votes = AnswerVote.objects.filter(user=user, answer_id=OuterRef("pk")).values("value")[:1]
+            return answers.annotate(user_vote=Coalesce(Subquery(votes), 0))
+        return answers.annotate(user_vote=Value(0))

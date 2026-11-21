@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.core.validators import FileExtensionValidator
 
 from .models import UserProfile
 
@@ -48,15 +49,32 @@ class LogoutForm(forms.Form):
         if url_has_allowed_host_and_scheme(url=next_url, allowed_hosts=set(), require_https=True):
             if urlsplit(next_url).path != reverse("users:profile"):
                 return next_url
-        
+
         return reverse("questions:index")
+
+class AvatarField(forms.ImageField):
+    default_validators = [FileExtensionValidator(
+        allowed_extensions=["png", "jpg", "jpeg"],
+        message="Разрешены только PNG и JPEG."
+    )]
+
+    def validate(self, value):
+        super().validate(value)
+        if not value:
+            return
+        if value.size > 5 * 1024 * 1024:
+            raise forms.ValidationError("Размер аватара не должен превышать 5 МБ.")
+        if value.image.format not in {"PNG", "JPEG"}:
+            raise forms.ValidationError("Разрешены только изображения PNG и JPEG.")
+
 
 class SignupForm(forms.ModelForm):
     email = forms.EmailField(max_length=254, required=False)
     nickname = forms.CharField(max_length=50)
+    avatar = AvatarField(required=False)
     password = forms.CharField(strip=False, widget=forms.PasswordInput())
     password_repeat = forms.CharField(strip=False, widget=forms.PasswordInput())
-    
+
     class Meta:
         model = User
         fields = ("username", "email")
@@ -80,7 +98,7 @@ class SignupForm(forms.ModelForm):
                 self.add_error("password", error)
 
         return cleaned_data
-    
+
     @transaction.atomic
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -91,13 +109,15 @@ class SignupForm(forms.ModelForm):
 
             UserProfile.objects.create(
                 user=user,
-                name=self.cleaned_data["nickname"]
+                name=self.cleaned_data["nickname"],
+                avatar=self.cleaned_data.get("avatar")
             )
 
         return user
 
 class ProfileForm(forms.ModelForm):
     email = forms.EmailField(max_length=254, required=False)
+    avatar = AvatarField(required=False)
     nickname = forms.CharField(max_length=50)
 
     class Meta:
@@ -117,7 +137,11 @@ class ProfileForm(forms.ModelForm):
         user = super().save(commit=commit)
 
         if commit:
+            defaults = {"name": self.cleaned_data["nickname"]}
+            avatar = self.cleaned_data.get("avatar")
+            if avatar:
+                defaults["avatar"] = avatar
 
-            UserProfile.objects.update_or_create(user=user, defaults={"name": self.cleaned_data["nickname"]})
+            UserProfile.objects.update_or_create(user=user, defaults=defaults)
 
         return user

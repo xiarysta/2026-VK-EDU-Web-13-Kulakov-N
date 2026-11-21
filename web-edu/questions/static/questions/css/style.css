@@ -45,6 +45,8 @@ header {
 }
 
 .header-ask-btn {
+  border: 0;
+  font: inherit;
   background-color: #ff8a3d;
   color: #17131f;
   padding: 8px 16px;
@@ -53,7 +55,7 @@ header {
   box-shadow: 3px 3px 0px black;
 }
 
-.header-ask-btn:hover {
+.header-ask-btn:hover:not(:disabled) {
   background-color: #ffab70;
   box-shadow: 5px 5px 0px black;
 }
@@ -278,7 +280,7 @@ input[type="search"]:focus {
   cursor: pointer;
 }
 
-.question-vote-controls button:hover {
+.question-vote-controls button:hover:not(:disabled) {
   color: #ffffff;
   opacity: 0.8;
 }
@@ -291,6 +293,12 @@ input[type="search"]:focus {
 
 .question-vote-controls span {
   font-weight: bold;
+}
+
+.header-ask-btn:disabled,
+.question-vote-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .question-content {
@@ -428,6 +436,24 @@ input[type="search"]:focus {
 .question-detail .question-vote-controls {
   gap: 12px;
   font-size: 1.25rem;
+}
+
+.answer-login-prompt {
+  margin: 24px 0 0;
+}
+
+.answer-login-prompt a {
+  color: #cbb7e8;
+}
+
+.answer-login-prompt a:hover {
+  color: #ff8a3d;
+}
+
+.answer-login-prompt a:focus-visible {
+  outline: 2px solid #ff8a3d;
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .answer-form {
