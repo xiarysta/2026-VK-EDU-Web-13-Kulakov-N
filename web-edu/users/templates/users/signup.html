@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Регистрация - WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  <h2>Регистрация</h2>
+  <p>* — обязательные поля.</p>
+
+        <form class="register-form" action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data">
+
+          {% csrf_token %}
+
+          {% if form.errors %}
+            <p class="auth-form-error" role="alert">Не удалось создать аккаунт. Проверьте данные формы.</p>
+          {% endif %}
+
+          {% if form.non_field_errors %}
+            <div class="auth-form-error" role="alert">
+              {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="register-form-row">
+            <label for="register-username">Логин <span aria-hidden="true">*</span></label>
+
+            <div class="register-form-field">
+              <input id="register-username" name="username" type="text" placeholder="Придумайте логин"
+              value="{{ form.username.value|default_if_none:'' }}"
+              autocomplete="username" required maxlength="30"
+              aria-describedby="username-hint{% if form.username.errors %} register-username-errors{% endif %}"
+              {% if form.username.errors %}aria-invalid="true"{% endif %}>
+              <small id="username-hint">Не более 30 символов.</small>
+              {% if form.username.errors %}
+                <div id="register-username-errors" role="alert">
+                  {% for error in form.username.errors %}
+                    <p class="auth-field-error">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-email">Почта</label>
+
+            <div class="register-form-field">
+              <input id="register-email" name="email" type="email"
+              value="{{ form.email.value|default_if_none:'' }}"
+              autocomplete="email" maxlength="254"
+              aria-describedby="register-email-hint{% if form.email.errors %} register-email-errors{% endif %}"
+              {% if form.email.errors %}aria-invalid="true"{% endif %}>
+              <small id="register-email-hint">Необязательно.</small>
+              {% if form.email.errors %}
+                <div id="register-email-errors" role="alert">
+                  {% for error in form.email.errors %}
+                    <p class="auth-field-error">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-nickname">Имя <span aria-hidden="true">*</span></label>
+
+            <div class="register-form-field">
+              <input id="register-nickname" name="nickname" type="text" placeholder="Как вас называть?"
+              value="{{ form.nickname.value|default_if_none:'' }}"
+              autocomplete="nickname" required maxlength="50"
+              aria-describedby="nickname-hint{% if form.nickname.errors %} register-nickname-errors{% endif %}"
+              {% if form.nickname.errors %}aria-invalid="true"{% endif %}>
+              <small id="nickname-hint">Имя, которое увидят другие участники.</small>
+              {% if form.nickname.errors %}
+                <div id="register-nickname-errors" role="alert">
+                  {% for error in form.nickname.errors %}
+                    <p class="auth-field-error">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-password">Пароль <span aria-hidden="true">*</span></label>
+
+            <div class="register-form-field">
+              <input id="register-password" name="password" type="password" placeholder="Придумайте пароль"
+              autocomplete="new-password" required minlength="8"
+              aria-describedby="password-hint{% if form.password.errors %} register-password-errors{% endif %}"
+              {% if form.password.errors %}aria-invalid="true"{% endif %}>
+              <small id="password-hint">Не менее 8 символов.</small>
+              {% if form.password.errors %}
+                <div id="register-password-errors" role="alert">
+                  {% for error in form.password.errors %}
+                    <p class="auth-field-error">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-password-repeat">Повтор пароля <span aria-hidden="true">*</span></label>
+
+            <div class="register-form-field">
+              <input id="register-password-repeat" name="password_repeat" type="password" placeholder="Повторите пароль"
+              autocomplete="new-password" required minlength="8"
+              {% if form.password_repeat.errors %}aria-invalid="true" aria-describedby="register-password-repeat-errors"{% endif %}>
+              {% if form.password_repeat.errors %}
+                <div id="register-password-repeat-errors" role="alert">
+                  {% for error in form.password_repeat.errors %}
+                    <p class="auth-field-error">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="register-form-row">
+            <label for="register-avatar">Аватар</label>
+
+            <div class="register-form-field">
+              <input id="register-avatar" name="avatar" type="file" accept="image/png, image/jpeg"
+              aria-describedby="register-avatar-hint{% if form.avatar.errors %} register-avatar-errors{% endif %}"
+              {% if form.avatar.errors %}aria-invalid="true"{% endif %}>
+              <small id="register-avatar-hint">Необязательно. Выберите изображение PNG или JPEG размером не более 5 МБ.</small>
+              {% if form.avatar.errors %}
+                <div id="register-avatar-errors" role="alert">
+                  {% for error in form.avatar.errors %}
+                    <p class="auth-field-error">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <button type="submit">Зарегистрироваться</button>
+
+          <a class="auth-form-link" href="{% url 'users:login' %}">Уже есть аккаунт? Войти</a>
+
+        </form>
+{% endblock content %}

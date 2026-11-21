@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Профиль - WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  <h2>Настройки: {{ user.username }}</h2>
+
+  <form class="settings-form" action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.errors %}
+      <p class="auth-form-error" role="alert">Не удалось сохранить изменения. Проверьте данные формы.</p>
+    {% endif %}
+    {% if form.non_field_errors %}
+      <div class="auth-form-error" role="alert">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="settings-form-row">
+      <label for="user-login">Логин</label>
+      <div class="settings-form-field">
+        <input id="user-login" type="text" value="{{ user.username }}" readonly aria-describedby="login-hint">
+        <small id="login-hint">Логин нельзя изменить.</small>
+      </div>
+    </div>
+
+    <div class="settings-form-row">
+      <label for="user-email">Почта</label>
+      <div class="settings-form-field">
+        <input id="user-email" name="email" type="email"
+          value="{{ form.email.value|default_if_none:'' }}" autocomplete="email" maxlength="254"
+          aria-describedby="email-hint{% if form.email.errors %} email-error{% endif %}"
+          {% if form.email.errors %}aria-invalid="true"{% endif %}>
+        <small id="email-hint">Необязательно.</small>
+        {% if form.email.errors %}
+          <div id="email-error" role="alert">
+            {% for error in form.email.errors %}
+              <p class="auth-field-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="settings-form-row">
+      <label for="user-nickname">Имя</label>
+      <div class="settings-form-field">
+        <input id="user-nickname" name="nickname" type="text"
+          value="{{ form.nickname.value|default_if_none:'' }}" autocomplete="nickname" required maxlength="50"
+          {% if form.nickname.errors %}aria-invalid="true" aria-describedby="nickname-error"{% endif %}>
+        {% if form.nickname.errors %}
+          <div id="nickname-error" role="alert">
+            {% for error in form.nickname.errors %}
+              <p class="auth-field-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="settings-form-row">
+      <label for="user-avatar">Аватар</label>
+      <div class="settings-form-field">
+        {% if user.userprofile.avatar %}
+          <img class="settings-user-avatar" src="{{ user.userprofile.avatar.url }}" alt="Текущий аватар">
+        {% else %}
+          <img class="settings-user-avatar" src="{% static 'questions/img/pumpkin.svg' %}" alt="Текущий аватар">
+        {% endif %}
+        <input id="user-avatar" name="avatar" type="file" accept="image/png, image/jpeg"
+          aria-describedby="avatar-hint{% if form.avatar.errors %} avatar-error{% endif %}"
+          {% if form.avatar.errors %}aria-invalid="true"{% endif %}>
+        <small id="avatar-hint">Выберите изображение PNG или JPEG размером не более 5 МБ.</small>
+        {% if form.avatar.errors %}
+          <div id="avatar-error" role="alert">
+            {% for error in form.avatar.errors %}
+              <p class="auth-field-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <button type="submit">Сохранить</button>
+  </form>
+{% endblock content %}

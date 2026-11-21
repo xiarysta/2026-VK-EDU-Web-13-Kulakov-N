@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ question.title }} — WhyAndWhat
+{% endblock title %}
+
+{% block content %}
+  {% include "questions/includes/question_card.html" with question=question is_detail=True %}
+
+  <h2>Ответы</h2>
+  {% for answer in answers %}
+    {% include "questions/includes/answer_card.html" with answer=answer %}
+  {% empty %}
+    <p>Ответов пока нет.</p>
+  {% endfor %}
+
+  {% include "questions/includes/pagination.html" with page_obj=page_obj %}
+
+  {% if user.is_authenticated %}
+
+		<form class="answer-form" action="{{ question.get_absolute_url }}" method="post">
+
+			{% csrf_token %}
+
+			<label class="visually-hidden" for="answer-text">Ваш ответ</label>
+
+			<textarea id="answer-text" name="content" rows="4" placeholder="Введите ваш ответ…" required maxlength="5000"
+              {% if form.content.errors %}aria-invalid="true" aria-describedby="answer-errors"{% endif %}>{{ form.content.value|default_if_none:'' }}</textarea>
+
+            {% if form.content.errors %}
+              <div id="answer-errors" role="alert">
+                {% for error in form.content.errors %}
+                  <p class="auth-field-error">{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% for error in form.non_field_errors %}
+              <p class="auth-form-error" role="alert">{{ error }}</p>
+            {% endfor %}
+
+			<button type="submit">Ответить</button>
+		</form>
+
+  {% else %}
+      <p class="answer-login-prompt">
+          <a href="{% url 'users:login' %}?next={{ request.get_full_path|urlencode }}">
+          Войдите, чтобы оставить ответ.
+          </a>
+      </p>
+  {% endif %}
+
+{% endblock content %}

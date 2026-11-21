@@ -1,0 +1,49 @@
+{% load static %}
+
+<article class="question-card {% if is_detail %} question-detail {% endif %}" id="question-{{ question.id }}">
+  <div class="question-vote">
+    {% if question.user.userprofile.avatar %}
+        <img class="question-avatar"
+        src="{{ question.user.userprofile.avatar.url }}"
+        alt="Аватар автора вопроса">
+    {% else %}
+        <img class="question-avatar"
+        src="{% static 'questions/img/pumpkin.svg' %}"
+        alt="Аватар автора вопроса">
+    {% endif %}
+
+    <div class="question-vote-controls" data-vote-url="{{ question.get_absolute_url }}" data-action="vote_question">
+      <button type="button" data-value="1" class="{% if question.user_vote == 1 %}vote-active{% endif %}" aria-pressed="{% if question.user_vote == 1 %}true{% else %}false{% endif %}" aria-label="Поставить плюс" {% if not user.is_authenticated %}disabled title="Войдите, чтобы оценить вопрос"{% elif question.user_vote == 1 %}disabled title="Вы уже поставили эту оценку"{% endif %}>▲</button>
+      <span data-rating aria-live="polite"> {{question.rating}} </span>
+      <button type="button" data-value="-1" class="{% if question.user_vote == -1 %}vote-active{% endif %}" aria-pressed="{% if question.user_vote == -1 %}true{% else %}false{% endif %}" aria-label="Поставить минус" {% if not user.is_authenticated %}disabled title="Войдите, чтобы оценить вопрос"{% elif question.user_vote == -1 %}disabled title="Вы уже поставили эту оценку"{% endif %}>▼</button>
+    </div>
+  </div>
+
+  <div class="question-content">
+    {% if is_detail %}
+      <h2>{{ question.title }}</h2>
+    {% else %}
+      <h3>
+        <a href="{{ question.get_absolute_url }}">{{question.title}}</a>
+      </h3>
+    {% endif %}
+    <p>
+      {{question.content}}
+    </p>
+
+    <div class="question-meta">
+      <a href="{{question.get_absolute_url}}">Ответы ({{question.answers_count}})</a>
+      <span>
+        Теги:
+        {% for tag in question.tags.all %}
+          <a href="{% url 'questions:tag_detail' tag.name %}">{{tag.name}}</a>
+        {% empty %}
+          <span>не указаны</span>
+        {% endfor %}
+      </span>
+      <time datetime="{{ question.created_at|date:'c' }}">
+        {{ question.created_at|date:"d.m.Y H:i" }}
+      </time>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,77 @@
+<script>
+async function sendAction(url, data) {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "X-CSRFToken": document.querySelector('[name="csrfmiddlewaretoken"]').value,
+      },
+      body: new URLSearchParams(data),
+    });
+    const result = await response.json();
+
+    if (!response.ok) {
+      alert(result.error || "Неверные данные. Обновите страницу и попробуйте снова.");
+      return null;
+    }
+    return result;
+  } catch (error) {
+    alert("Не удалось выполнить действие. Проверьте подключение и обновите страницу.");
+    return null;
+  }
+}
+
+// Голосование за вопрос или ответ.
+for (const controls of document.querySelectorAll("[data-vote-url]")) {
+  const buttons = controls.querySelectorAll("button[data-value]");
+
+  for (const button of buttons) {
+    button.onclick = async function () {
+      if (button.disabled) return;
+      for (const item of buttons) item.disabled = true;
+
+      const data = {action: controls.dataset.action, value: button.dataset.value};
+      if (controls.dataset.answerId) {
+        data.answer_id = controls.dataset.answerId;
+      }
+
+      const result = await sendAction(controls.dataset.voteUrl, data);
+      if (result) {
+        controls.querySelector("[data-rating]").textContent = result.rating;
+        for (const item of buttons) {
+          const active = Number(item.dataset.value) === result.vote;
+          item.classList.toggle("vote-active", active);
+          item.setAttribute("aria-pressed", active);
+        }
+      }
+      for (const item of buttons) {
+        item.disabled = item.getAttribute("aria-pressed") === "true";
+        item.title = item.disabled ? "Вы уже поставили эту оценку" : "";
+      }
+    };
+  }
+}
+
+// Выбор правильного ответа.
+const checkboxes = document.querySelectorAll("[data-correct-url]");
+for (const checkbox of checkboxes) {
+  checkbox.onchange = async function () {
+    for (const item of checkboxes) item.disabled = true;
+
+    const result = await sendAction(checkbox.dataset.correctUrl, {
+      action: "correct_answer",
+      answer_id: checkbox.dataset.answerId,
+      is_correct: String(checkbox.checked),
+    });
+    if (result) {
+      for (const item of checkboxes) {
+        item.checked = Number(item.dataset.answerId) === result.correct_answer_id;
+      }
+    } else {
+      checkbox.checked = !checkbox.checked;
+    }
+    for (const item of checkboxes) item.disabled = false;
+  };
+}
+</script>

@@ -1,0 +1,34 @@
+{% load static %}
+
+{% if page_obj.has_other_pages %}
+<nav class="questions-pagination" aria-label="Страницы вопросов">
+    <ul class="questions-pagination-list">
+      {% if page_obj.has_previous %}
+        <li>
+          <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+        </li>
+      {% endif %}
+      
+
+      {% for number in page_obj.page_numbers %}
+        <li>
+          {% if number == page_obj.paginator.ELLIPSIS %}
+            <span>{{ number }}</span>
+          {% else %}
+            <a href="?page={{ number }}"
+               {% if number == page_obj.number %}aria-current="page"{% endif %}>
+              {{ number }}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li>
+          <a href="?page={{ page_obj.next_page_number }}">Вперед</a>
+        </li>
+      {% endif %}
+
+    </ul>
+</nav>
+{% endif %}
